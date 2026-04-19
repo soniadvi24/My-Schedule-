@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Space 🌸✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FFF0F5; /* Lavender Blush */
+            --card-bg: #FFFFFF;
+            --primary-pink: #FFB6C1; /* Light Pink */
+            --accent-pink: #FF69B4; /* Hot Pink */
+            --text-main: #4A4A4A;
+            --text-muted: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            border: 2px solid #FFE4E1;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .greeting h1 {
+            font-size: 28px;
+            color: var(--accent-pink);
+        }
+
+        .greeting p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .time-widget {
+            background: linear-gradient(135deg, var(--primary-pink), var(--accent-pink));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Schedule Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+
+        .class-item {
+            background: var(--bg-color);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease;
+            border-left: 5px solid var(--primary-pink);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .class-item:hover {
+            transform: translateX(5px);
+            border-left: 5px solid var(--accent-pink);
+        }
+
+        .class-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .class-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .class-time {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-pink);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            white-space: nowrap;
+        }
+
+        /* Tasks & Pomodoro Section */
+        .task-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .task-list li {
+            font-size: 14px;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--primary-pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list input[type="checkbox"] {
+            accent-color: var(--accent-pink);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Pomodoro Timer */
+        .pomodoro {
+            text-align: center;
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .timer-display {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-pink);
+            margin: 10px 0;
+        }
+
+        .btn {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            background: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+
+        /* Modal (Pop-up Form) Styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            border: 2px solid #FFE4E1;
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h2 {
+            font-size: 20px;
+            color: var(--accent-pink);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--bg-color);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .btn-cancel {
+            background: var(--bg-color);
+            color: var(--text-main);
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #e5d8dc;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="header">
+            <div class="greeting">
+                <h1 id="greetingText">Slay Your Day! ✨</h1>
+                <p>Jadwal hari ini padat, tapi kamu pasti bisa. 💅</p>
+            </div>
+            <div class="time-widget" id="clock">00:00:00</div>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <div class="section-title">📅 Jadwal Kuliah</div>
+                <button class="btn-add" onclick="openModal()">+ Tambah Jadwal</button>
+            </div>
+            
+            <div id="schedule-list">
+                <div class="class-item">
+                    <div class="class-info">
+                        <h3>UI/UX Design</h3>
+                        <p>📍 Lab Komputer A • Dosen: Bpk. Andi</p>
+                    </div>
+                    <div class="class-time">08:00 - 10:30</div>
+                </div>
+
+                <div class="class-item">
+                    <div class="class-info">
+                        <h3>Kewirausahaan</h3>
+                        <p>📍 Ruang 302 • Dosen: Ibu Siti</p>
+                    </div>
+                    <div class="class-time">11:00 - 12:40</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">📝 Tugas Negara 💀</div>
+            <ul class="task-list">
+                <li><input type="checkbox"> Revisi Mockup Figma</li>
+                <li><input type="checkbox"> Bikin PPT Kewirausahaan</li>
+                <li><input type="checkbox"> Submit Tugas HTML/CSS</li>
+            </ul>
+
+            <div class="section-title" style="margin-top: 30px;">🍅 Focus Time</div>
+            <div class="pomodoro">
+                <p style="font-size: 12px; color: var(--text-muted);">25 Menit Belajar Tanpa Distraksi!</p>
+                <div class="timer-display" id="timer">25:00</div>
+                <button class="btn" onclick="startTimer()">Start</button>
+                <button class="btn" onclick="resetTimer()" style="background: white; color: var(--accent-pink); border: 2px solid var(--primary-pink);">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="addModal">
+        <div class="modal-box">
+            <h2>Tambah Kelas Baru 🌸</h2>
+            <div class="input-group">
+                <input type="text" id="inputSubject" placeholder="Mata Kuliah (ex: Algoritma)" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="inputDetails" placeholder="📍 Lokasi & Dosen (ex: R.101 • Pak Budi)" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="inputTime" placeholder="Waktu (ex: 13:00 - 15:00)" required>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Batal</button>
+                <button class="btn" onclick="addSchedule()">Simpan ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Real-time Clock & Greeting
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+
+            const greetingElement = document.getElementById('greetingText');
+            if(hours >= 5 && hours < 11) greetingElement.innerHTML = "Morning, Bestie! 🌅";
+            else if(hours >= 11 && hours < 15) greetingElement.innerHTML = "Keep Slaying! ☀️";
+            else if(hours >= 15 && hours < 19) greetingElement.innerHTML = "Sore Pejuang IPK! 🌇";
+            else greetingElement.innerHTML = "Night Vibes 🌙";
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. Fitur Tambah Jadwal Manual
+        const modal = document.getElementById('addModal');
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            // Reset input form
+            document.getElementById('inputSubject').value = '';
+            document.getElementById('inputDetails').value = '';
+            document.getElementById('inputTime').value = '';
+        }
+
+        function addSchedule() {
+            const subject = document.getElementById('inputSubject').value;
+            const details = document.getElementById('inputDetails').value;
+            const time = document.getElementById('inputTime').value;
+
+            // Validasi sederhana agar tidak kosong
+            if(subject === '' || details === '' || time === '') {
+                alert('Tolong isi semua datanya ya, bestie! 🥺');
+                return;
+            }
+
+            // Membuat elemen HTML baru untuk jadwal
+            const scheduleList = document.getElementById('schedule-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'class-item';
+            
+            newItem.innerHTML = `
+                <div class="class-info">
+                    <h3>${subject}</h3>
+                    <p>${details}</p>
+                </div>
+                <div class="class-time">${time}</div>
+            `;
+
+            // Menambahkan jadwal baru ke daftar
+            scheduleList.appendChild(newItem);
+
+            // Tutup modal setelah berhasil
+            closeModal();
+        }
+
+        // 3. Pomodoro Timer Logic
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes
+        let isRunning = false;
+
+        function updateDisplay() {
+            let minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            let seconds = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        alert("Waktu fokus selesai! Yeay, istirahat dulu yuk! 🍵");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
